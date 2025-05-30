@@ -442,6 +442,7 @@ class EagleVerifyInput:
                 target_probs.shape, dtype=torch.float32, device="cuda"
             )
             coins = torch.rand_like(candidates, dtype=torch.float32, device="cuda")
+            coins[:, 0] = 0.0  # The first tokens are sampled directly from the target model and therefore do not need to be verified.
             tree_speculative_sampling_target_only(
                 predicts=predict,  # mutable
                 accept_index=accept_index,  # mutable
